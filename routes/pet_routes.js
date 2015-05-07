@@ -4,6 +4,8 @@ var Pet = require('../models/Pet.js');
 var bodyparser = require('body-parser');
 
 module.exports = function(router) {
+	var query = new Pet({type: 'dog'});
+
 	router.use(bodyparser.json());
 
 	router.get('/pets', function(req, res) {
@@ -16,13 +18,13 @@ module.exports = function(router) {
 		});//end find
 	});//end get method
 
+	//custom query/ method
 	router.get('/pets/search', function(req, res) {
-		Pet.find({'type': 'dog'}, 'name owner', function(err, data) {
+		query.findSimilarTypes(function(err, data) {
 			if(err) {
 				console.log(err);
 				return res.status(500).json({msg: 'internal server error'});
 			}
-			console.log(data);
 			res.json(data);
 		});
 	});
