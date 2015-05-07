@@ -10,8 +10,8 @@ var petSchema = new Schema({
 	type: String
 });//end Pet Schema
 
-petSchema.methods.findSimilarTypes = function(cb) {
-  return this.model('Pet').find({type: this.type}, cb);
+petSchema.methods.findSimilarTypes = function(callback) {
+  return this.model('Pet').find({type: this.type}, callback);
 };
 
 //create model
