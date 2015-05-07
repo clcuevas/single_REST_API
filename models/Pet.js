@@ -10,5 +10,9 @@ var petSchema = new Schema({
 	type: String
 });//end Pet Schema
 
+petSchema.methods.findSimilarTypes = function(cb) {
+  return this.model('Pet').find({type: this.type}, cb);
+};
+
 //create model
 module.exports = mongoose.model('Pet', petSchema);
