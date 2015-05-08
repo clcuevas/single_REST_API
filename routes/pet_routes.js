@@ -4,7 +4,8 @@ var Pet = require('../models/Pet.js');
 var bodyparser = require('body-parser');
 
 module.exports = function(router) {
-	var query = new Pet({type: 'dog'});
+	var queryDog = new Pet({type: 'dog'});
+	var queryFerrets = new Pet({type: 'ferret'})
 
 	router.use(bodyparser.json());
 
@@ -18,15 +19,30 @@ module.exports = function(router) {
 		});//end find
 	});//end get method
 
-	//custom query/ method
 	router.get('/pets/search', function(req, res) {
-		query.findSimilarTypes(function(err, data) {
+		res.send('Type /dogs after the search URL to view all dogs or /ferrets to view all ferrets');
+	});
+
+	//custom query/ method for dogs
+	router.get('/pets/search/dogs', function(req, res) {
+		queryDog.findSimilarTypes(function(err, data) {
 			if(err) {
 				console.log(err);
 				return res.status(500).json({msg: 'internal server error'});
 			}
 			res.json(data);
-		});
+		});//end dog query
+	});
+
+	//custom query/ method for ferrets
+	router.get('/pets/search/ferrets', function(req, res) {
+		queryFerrets.findSimilarTypes(function(err, data) {
+			if(err) {
+				console.log(err);
+				return res.status(500).json({msg: 'internal server error'});
+			}
+			res.json(data);
+		});//end ferret query
 	});
 
 	router.post('/pets', function(req, res) {
