@@ -16,7 +16,10 @@ describe('Pet REST API', function() {
   before(function(done) {
     var petTest2 = new Pet({name: 'Dos', owner: 'Claudia', weight: 60, type: 'dog'});
     petTest2.save(function(err, data) {
-      if(err) throw err;
+      if(err) {
+        throw err;
+      }
+      
       this.petTest2 = data;
       done();
     }.bind(this));//end pet save
@@ -58,7 +61,9 @@ describe('modify existing Pet documents', function() {
   beforeEach(function(done) {
     var petTest = new Pet({name: 'Peanut', owner: 'Claudia', weight: 22, type: 'dog'});
     petTest.save(function(err, data) {
-      if(err) throw err;
+      if(err) {
+        throw err;
+      }
 
       this.petTest = data;
       done();

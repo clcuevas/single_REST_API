@@ -9,26 +9,31 @@ module.exports = function(grunt) {
   grunt.initConfig({
     jshint: {
       dev: {
-        src: ['*.js', '/models/**/*.js', '/routes/**/*.js', '/test/**/*.js']
+        src: ['*.js', './models/**/*.js', './routes/**/*.js', './test/**/*.js']
       },
       options: {
         jshintrc: '.jshintrc'
       }
     },
+    jscs: {
+      dev: {
+        src: ['<%= jshint.dev.src %>']
+      }
+    },
     simplemocha: {
       dev: {
-        src: ['/test/**/*.js']
+        src: ['./test/**/*.js']
       }
     },
     watch: {
       app: {
-        files: ['<%= jshint.dev.src %>']
-        tasks: ['jshint', 'simplemocha']
+        files: ['<%= jshint.dev.src %>'],
+        tasks: ['jshint', 'jscs', 'simplemocha']
       }
     }
   });//end grunt initConfig
 
-  grunt.registerTest('test', ['jshint:dev']);
-  grunt.registerTest('mocha', ['simeplemocha:dev']);
-  grunt.registerTest('default', ['test', 'mocha', 'watch']);
+  grunt.registerTask('test', ['jshint:dev', 'jscs:dev']);
+  grunt.registerTask('mocha', ['simplemocha:dev']);
+  grunt.registerTask('default', ['test', 'mocha', 'watch']);
 };

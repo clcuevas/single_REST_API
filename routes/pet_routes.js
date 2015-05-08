@@ -5,7 +5,7 @@ var bodyparser = require('body-parser');
 
 module.exports = function(router) {
 	var queryDog = new Pet({type: 'dog'});
-	var queryFerrets = new Pet({type: 'ferret'})
+	var queryFerrets = new Pet({type: 'ferret'});
 
 	router.use(bodyparser.json());
 
